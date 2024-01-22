@@ -1,0 +1,64 @@
+<!DOCTYPE suite SYSTEM "http://testng.org/testng-1.0.dtd">
+<!--this xml is for ci, please don't modify it-->
+<!--testcase for function test, which can be excuted concurrently-->
+
+<suite name="driver" verbose="1" parallel="classes" thread-count="5">  
+
+    <!--主机名，CI默认传入localhost-->
+    <parameter name="HOSTNAME"       value="192.168.17.196" />
+    <!--协调节点端口号，CI默认传入11810-->
+    <parameter name="SVCNAME"        value="11810" />
+    <!--全文索引ES端主机名，CI默认传入192.168.28.143-->
+    <parameter name="ESHOSTNAME"     value="${ESHOSTNAME}" />
+    <!--全文索引ES端端口号，CI默认传入9200-->
+    <parameter name="ESSVCNAME"      value="${ESSVCNAME}" />
+    <!--全文索引前缀，CI传入与工程名相关，例如NORMALTESTG3D3-->
+    <parameter name="FULLTEXTPREFIX" value="${FULLTEXTPREFIX}" />
+    <!--公共CS名-->
+    <parameter name="CHANGEDPREFIX"  value="story_java_test" />
+    <!--用例创建节点预留端口号最小值-->
+    <parameter name="RSRVPORTBEGIN"  value="26000" />
+    <!--用例创建节点预留端口号最大值-->
+    <parameter name="RSRVPORTEND"    value="27000" />
+    <!--用例创建节点存放节点数据目录-->
+    <parameter name="RSRVNODEDIR"    value="${RSRVNODEDIR}" />
+    <!--用例存放临时文件的目录-->
+    <parameter name="WORKDIR"        value="/tmp/javatest" />
+
+    <listeners>
+        <listener class-name="com.sequoiadb.testcommon.TimePrinterListener" />
+    </listeners>
+
+    <test name="normaltest" parallel="classes" thread-count="5">
+        <packages>            
+<!--            <package name="com.sequoiadb.decimal" />-->
+<!--            <package name="com.sequoiadb.rename"/>-->
+<!--            <package name="com.sequoiadb.attachtest" />-->
+<!--            <package name="com.sequoiadb.lob.biglob" />-->
+<!--            <package name="com.sequoiadb.lob.basicoperation" />-->
+<!--            <package name="com.sequoiadb.lob.randomwrite" />-->
+<!--            <package name="com.sequoiadb.lob.subcl"/>-->
+<!--            <package name="com.sequoiadb.lob.shareread"/>-->
+<!--            <package name="com.sequoiadb.numberlong"  />-->
+<!--            &lt;!&ndash;临时调整索引用例到大数据工程中运行&ndash;&gt;-->
+<!--&lt;!&ndash;            <package name="com.sequoiadb.index"/>&ndash;&gt;-->
+<!--            <package name="com.sequoiadb.crud.numoverflow" />-->
+<!--            <package name="com.sequoiadb.crud.truncate" />-->
+<!--            <package name="com.sequoiadb.crud.basicoperation" />-->
+<!--            <package name="com.sequoiadb.meta" />-->
+<!--            <package name="com.sequoiadb.split.basefunc"/>-->
+<!--            <package name="com.sequoiadb.metadataconsistency.data"/>-->
+<!--            <package name="com.sequoiadb.autoIncrement"/>-->
+<!--            <package name="com.sequoiadb.subcl"/>-->
+<!--            <package name="com.sequoiadb.split"/>-->
+<!--            <package name="com.sequoiadb.sortOptimize"/>-->
+<!--			&lt;!&ndash;CI-1001&ndash;&gt;-->
+<!--            &lt;!&ndash;<package name="com.sequoiadb.fulltext.parallel"/>&ndash;&gt;-->
+<!--            <package name="com.sequoiadb.cappedcl" />-->
+<!--            <package name="com.sequoiadb.dataconsistency"/>-->
+            <package name="com.sequoiadb.gb18030"/>
+        </packages>        
+    </test>
+    
+</suite>
+    
