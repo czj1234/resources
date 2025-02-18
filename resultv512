@@ -1,0 +1,311 @@
+SequoiaDB shell version: 5.12
+Release: 234
+Git version: c5e3b1f92f1bb42040f3e4c937df2c1f3f7eefbd
+2024-08-09-01.12.50(Enterprise Debug)
+
+1、
+[sdbadmin@dell-c79-1703-3083 opt]$ time sdbstart -p 11810
+Success: sequoiadb(11810) is successfully started (19590)
+Total: 1; Succeed: 1; Failed: 0
+
+real    1m58.368s
+user    0m0.774s
+sys     0m2.625s
+[sdbadmin@dell-c79-1703-3083 ~]$ ./linux-fincore_x86 /opt/sequoiadb/database/standalone/11810/test_0.1.data
+filename                                                                                       size        total_pages    min_cached page       cached_pages        cached_size        cached_perc
+--------                                                                                       ----        -----------    ---------------       ------------        -----------        -----------
+/opt/sequoiadb/database/standalone/11810/test_0.1.data                                  155,254,784             37,904                  0              1,120          4,587,520               2.95
+---
+total cached size: 4,587,520
+[sdbadmin@dell-c79-1703-3083 ~]$ ./linux-fincore_x86 /opt/sequoiadb/database/standalone/11810/test_0.1.idx
+filename                                                                                       size        total_pages    min_cached page       cached_pages        cached_size        cached_perc
+--------                                                                                       ----        -----------    ---------------       ------------        -----------        -----------
+/opt/sequoiadb/database/standalone/11810/test_0.1.idx                                   151,060,480             36,880                  0                128            524,288               0.35
+---
+total cached size: 524,288
+[sdbadmin@dell-c79-1703-3083 ~]$ ./linux-fincore_x86 /opt/sequoiadb/database/standalone/11810/test_0.1.lobd
+filename                                                                                       size        total_pages    min_cached page       cached_pages        cached_size        cached_perc
+--------                                                                                       ----        -----------    ---------------       ------------        -----------        -----------
+/opt/sequoiadb/database/standalone/11810/test_0.1.lobd                                1,476,460,544            360,464                  0                 32            131,072               0.01
+---
+total cached size: 131,072
+[sdbadmin@dell-c79-1703-3083 ~]$ ./linux-fincore_x86 /opt/sequoiadb/database/standalone/11810/test_0.1.lobm
+filename                                                                                       size        total_pages    min_cached page       cached_pages        cached_size        cached_perc
+--------                                                                                       ----        -----------    ---------------       ------------        -----------        -----------
+/opt/sequoiadb/database/standalone/11810/test_0.1.lobm                                   86,048,768             21,008                  0                 32            131,072               0.15
+---
+total cached size: 131,072
+
+2、
+[sdbadmin@dell-c79-1703-3083 ~]$ time sdbstop -p 11810
+Terminating process 19590: sequoiadb(11810)
+DONE
+Total: 1; Success: 1; Failed: 0
+
+real    1m3.400s
+user    0m0.013s
+sys     0m0.024s
+[sdbadmin@dell-c79-1703-3083 ~]$ ./linux-fincore_x86 /opt/sequoiadb/database/standalone/11810/test_0.1.data
+filename                                                                                       size        total_pages    min_cached page       cached_pages        cached_size        cached_perc
+--------                                                                                       ----        -----------    ---------------       ------------        -----------        -----------
+/opt/sequoiadb/database/standalone/11810/test_0.1.data                                  155,254,784             37,904                  0              1,120          4,587,520               2.95
+---
+total cached size: 4,587,520
+[sdbadmin@dell-c79-1703-3083 ~]$ ./linux-fincore_x86 /opt/sequoiadb/database/standalone/11810/test_0.1.idx
+filename                                                                                       size        total_pages    min_cached page       cached_pages        cached_size        cached_perc
+--------                                                                                       ----        -----------    ---------------       ------------        -----------        -----------
+/opt/sequoiadb/database/standalone/11810/test_0.1.idx                                   151,060,480             36,880                  0                 32            131,072               0.09
+---
+total cached size: 131,072
+[sdbadmin@dell-c79-1703-3083 ~]$ ./linux-fincore_x86 /opt/sequoiadb/database/standalone/11810/test_0.1.lobd
+filename                                                                                       size        total_pages    min_cached page       cached_pages        cached_size        cached_perc
+--------                                                                                       ----        -----------    ---------------       ------------        -----------        -----------
+/opt/sequoiadb/database/standalone/11810/test_0.1.lobd                                1,476,460,544            360,464                 -1                  0                  0               0.00
+---
+total cached size: 0
+[sdbadmin@dell-c79-1703-3083 ~]$ ./linux-fincore_x86 /opt/sequoiadb/database/standalone/11810/test_0.1.lobm
+filename                                                                                       size        total_pages    min_cached page       cached_pages        cached_size        cached_perc
+--------                                                                                       ----        -----------    ---------------       ------------        -----------        -----------
+/opt/sequoiadb/database/standalone/11810/test_0.1.lobm                                   86,048,768             21,008                  0                 32            131,072               0.15
+---
+total cached size: 131,072
+
+3、
+> db.invalidateFsCache()
+Takes 0.640221s.
+> db.sync()
+Takes 60.979219s.
+[sdbadmin@dell-c79-1703-3083 ~]$ ./linux-fincore_x86 /opt/sequoiadb/database/standalone/11810/test_0.1.data
+filename                                                                                       size        total_pages    min_cached page       cached_pages        cached_size        cached_perc
+--------                                                                                       ----        -----------    ---------------       ------------        -----------        -----------
+/opt/sequoiadb/database/standalone/11810/test_0.1.data                                  155,254,784             37,904                  0              1,120          4,587,520               2.95
+---
+total cached size: 4,587,520
+[sdbadmin@dell-c79-1703-3083 ~]$ ./linux-fincore_x86 /opt/sequoiadb/database/standalone/11810/test_0.1.idx
+filename                                                                                       size        total_pages    min_cached page       cached_pages        cached_size        cached_perc
+--------                                                                                       ----        -----------    ---------------       ------------        -----------        -----------
+/opt/sequoiadb/database/standalone/11810/test_0.1.idx                                   151,060,480             36,880                  0                 32            131,072               0.09
+---
+total cached size: 131,072
+[sdbadmin@dell-c79-1703-3083 ~]$ ./linux-fincore_x86 /opt/sequoiadb/database/standalone/11810/test_0.1.lobd
+filename                                                                                       size        total_pages    min_cached page       cached_pages        cached_size        cached_perc
+--------                                                                                       ----        -----------    ---------------       ------------        -----------        -----------
+/opt/sequoiadb/database/standalone/11810/test_0.1.lobd                                4,295,032,832          1,048,592                 -1                  0                  0               0.00
+---
+total cached size: 0
+[sdbadmin@dell-c79-1703-3083 ~]$ ./linux-fincore_x86 /opt/sequoiadb/database/standalone/11810/test_0.1.lobm
+filename                                                                                       size        total_pages    min_cached page       cached_pages        cached_size        cached_perc
+--------                                                                                       ----        -----------    ---------------       ------------        -----------        -----------
+/opt/sequoiadb/database/standalone/11810/test_0.1.lobm                                   86,048,768             21,008                  0                  1              4,096               0.00
+---
+total cached size: 4,096
+
+4、
+> db.snapshot(4)
+Takes 13.162787s.
+> db.snapshot(5)
+Takes 31.226201s.
+> db.snapshot(6)
+Takes 12.932410s.
+[sdbadmin@dell-c79-1703-3083 ~]$ ./linux-fincore_x86 /opt/sequoiadb/database/standalone/11810/test_0.1.data
+filename                                                                                       size        total_pages    min_cached page       cached_pages        cached_size        cached_perc
+--------                                                                                       ----        -----------    ---------------       ------------        -----------        -----------
+/opt/sequoiadb/database/standalone/11810/test_0.1.data                                  155,254,784             37,904                  0                 32            131,072               0.08
+---
+total cached size: 131,072
+[sdbadmin@dell-c79-1703-3083 ~]$ ./linux-fincore_x86 /opt/sequoiadb/database/standalone/11810/test_0.1.idx
+filename                                                                                       size        total_pages    min_cached page       cached_pages        cached_size        cached_perc
+--------                                                                                       ----        -----------    ---------------       ------------        -----------        -----------
+/opt/sequoiadb/database/standalone/11810/test_0.1.idx                                   151,060,480             36,880                  0                 32            131,072               0.09
+---
+total cached size: 131,072
+[sdbadmin@dell-c79-1703-3083 ~]$ ./linux-fincore_x86 /opt/sequoiadb/database/standalone/11810/test_0.1.lobd
+filename                                                                                       size        total_pages    min_cached page       cached_pages        cached_size        cached_perc
+--------                                                                                       ----        -----------    ---------------       ------------        -----------        -----------
+/opt/sequoiadb/database/standalone/11810/test_0.1.lobd                                4,295,032,832          1,048,592                 -1                  0                  0               0.00
+---
+total cached size: 0
+[sdbadmin@dell-c79-1703-3083 ~]$ ./linux-fincore_x86 /opt/sequoiadb/database/standalone/11810/test_0.1.lobm
+filename                                                                                       size        total_pages    min_cached page       cached_pages        cached_size        cached_perc
+--------                                                                                       ----        -----------    ---------------       ------------        -----------        -----------
+/opt/sequoiadb/database/standalone/11810/test_0.1.lobm                                   86,048,768             21,008                  0                 32            131,072               0.15
+---
+total cached size: 131,072
+
+listIndexes
+[sdbadmin@dell-c79-1703-3083 ~]$ ./linux-fincore_x86 /opt/sequoiadb/database/standalone/11810/test_0.1.data
+filename                                                                                       size        total_pages    min_cached page       cached_pages        cached_size        cached_perc
+--------                                                                                       ----        -----------    ---------------       ------------        -----------        -----------
+/opt/sequoiadb/database/standalone/11810/test_0.1.data                                  155,254,784             37,904              4,096                 32            131,072               0.08
+---
+total cached size: 131,072
+[sdbadmin@dell-c79-1703-3083 ~]$ ./linux-fincore_x86 /opt/sequoiadb/database/standalone/11810/test_0.1.idx
+filename                                                                                       size        total_pages    min_cached page       cached_pages        cached_size        cached_perc
+--------                                                                                       ----        -----------    ---------------       ------------        -----------        -----------
+/opt/sequoiadb/database/standalone/11810/test_0.1.idx                                   151,060,480             36,880              4,096                 96            393,216               0.26
+---
+total cached size: 393,216
+
+SequoiaDB shell version: 5.12
+Release: 326
+Git version: 268af48a739489b53932d18c2e1caf041af2dbd1
+2025-02-02-01.13.23(Enterprise Debug)
+
+1、
+[sdbadmin@dell-c79-1703-3083 opt]$ time sdbstart -p 11810
+Success: sequoiadb(11810) is successfully started (20054)
+Total: 1; Succeed: 1; Failed: 0
+
+real    0m36.661s
+user    0m0.234s
+sys     0m0.694s
+[sdbadmin@dell-c79-1703-3083 opt]$ cd
+[sdbadmin@dell-c79-1703-3083 ~]$ ./linux-fincore_x86 /opt/sequoiadb/database/standalone/11810/test_0.1.data
+filename                                                                                       size        total_pages    min_cached page       cached_pages        cached_size        cached_perc
+--------                                                                                       ----        -----------    ---------------       ------------        -----------        -----------
+/opt/sequoiadb/database/standalone/11810/test_0.1.data                                  155,254,784             37,904                  0                 36            147,456               0.09
+---
+total cached size: 147,456
+[sdbadmin@dell-c79-1703-3083 ~]$ ./linux-fincore_x86 /opt/sequoiadb/database/standalone/11810/test_0.1.idx
+filename                                                                                       size        total_pages    min_cached page       cached_pages        cached_size        cached_perc
+--------                                                                                       ----        -----------    ---------------       ------------        -----------        -----------
+/opt/sequoiadb/database/standalone/11810/test_0.1.idx                                   151,060,480             36,880                  0                 32            131,072               0.09
+---
+total cached size: 131,072
+[sdbadmin@dell-c79-1703-3083 ~]$ ./linux-fincore_x86 /opt/sequoiadb/database/standalone/11810/test_0.1.lobd
+filename                                                                                       size        total_pages    min_cached page       cached_pages        cached_size        cached_perc
+--------                                                                                       ----        -----------    ---------------       ------------        -----------        -----------
+/opt/sequoiadb/database/standalone/11810/test_0.1.lobd                                4,295,032,832          1,048,592                  0                 32            131,072               0.00
+---
+total cached size: 131,072
+[sdbadmin@dell-c79-1703-3083 ~]$ ./linux-fincore_x86 /opt/sequoiadb/database/standalone/11810/test_0.1.lobm
+filename                                                                                       size        total_pages    min_cached page       cached_pages        cached_size        cached_perc
+--------                                                                                       ----        -----------    ---------------       ------------        -----------        -----------
+/opt/sequoiadb/database/standalone/11810/test_0.1.lobm                                   86,048,768             21,008                  0                 32            131,072               0.15
+---
+total cached size: 131,072
+
+2、
+[sdbadmin@dell-c79-1703-3083 ~]$ time sdbstop -p 11810
+Terminating process 20054: sequoiadb(11810)
+DONE
+Total: 1; Success: 1; Failed: 0
+
+real    0m5.269s
+user    0m0.015s
+sys     0m0.015s
+[sdbadmin@dell-c79-1703-3083 ~]$ ./linux-fincore_x86 /opt/sequoiadb/database/standalone/11810/test_0.1.data
+filename                                                                                       size        total_pages    min_cached page       cached_pages        cached_size        cached_perc
+--------                                                                                       ----        -----------    ---------------       ------------        -----------        -----------
+/opt/sequoiadb/database/standalone/11810/test_0.1.data                                  155,254,784             37,904                 -1                  0                  0               0.00
+---
+total cached size: 0
+[sdbadmin@dell-c79-1703-3083 ~]$ ./linux-fincore_x86 /opt/sequoiadb/database/standalone/11810/test_0.1.idx
+filename                                                                                       size        total_pages    min_cached page       cached_pages        cached_size        cached_perc
+--------                                                                                       ----        -----------    ---------------       ------------        -----------        -----------
+/opt/sequoiadb/database/standalone/11810/test_0.1.idx                                   151,060,480             36,880                 -1                  0                  0               0.00
+---
+total cached size: 0
+[sdbadmin@dell-c79-1703-3083 ~]$ ./linux-fincore_x86 /opt/sequoiadb/database/standalone/11810/test_0.1.lobd
+filename                                                                                       size        total_pages    min_cached page       cached_pages        cached_size        cached_perc
+--------                                                                                       ----        -----------    ---------------       ------------        -----------        -----------
+/opt/sequoiadb/database/standalone/11810/test_0.1.lobd                                4,295,032,832          1,048,592                 -1                  0                  0               0.00
+---
+total cached size: 0
+[sdbadmin@dell-c79-1703-3083 ~]$ ./linux-fincore_x86 /opt/sequoiadb/database/standalone/11810/test_0.1.lobm
+filename                                                                                       size        total_pages    min_cached page       cached_pages        cached_size        cached_perc
+--------                                                                                       ----        -----------    ---------------       ------------        -----------        -----------
+/opt/sequoiadb/database/standalone/11810/test_0.1.lobm                                   86,048,768             21,008                 -1                  0                  0               0.00
+---
+total cached size: 0
+
+3、
+> db.invalidateFsCache()
+Takes 0.462929s.
+> db.sync()
+Takes 0.038403s.
+
+[sdbadmin@dell-c79-1703-3083 ~]$ ./linux-fincore_x86 /opt/sequoiadb/database/standalone/11810/test_0.1.data
+filename                                                                                       size        total_pages    min_cached page       cached_pages        cached_size        cached_perc
+--------                                                                                       ----        -----------    ---------------       ------------        -----------        -----------
+/opt/sequoiadb/database/standalone/11810/test_0.1.data                                  155,254,784             37,904                 -1                  0                  0               0.00
+---
+total cached size: 0
+[sdbadmin@dell-c79-1703-3083 ~]$ ./linux-fincore_x86 /opt/sequoiadb/database/standalone/11810/test_0.1.idx
+filename                                                                                       size        total_pages    min_cached page       cached_pages        cached_size        cached_perc
+--------                                                                                       ----        -----------    ---------------       ------------        -----------        -----------
+/opt/sequoiadb/database/standalone/11810/test_0.1.idx                                   151,060,480             36,880                 -1                  0                  0               0.00
+---
+total cached size: 0
+[sdbadmin@dell-c79-1703-3083 ~]$ ./linux-fincore_x86 /opt/sequoiadb/database/standalone/11810/test_0.1.lobd
+filename                                                                                       size        total_pages    min_cached page       cached_pages        cached_size        cached_perc
+--------                                                                                       ----        -----------    ---------------       ------------        -----------        -----------
+/opt/sequoiadb/database/standalone/11810/test_0.1.lobd                                7,113,605,120          1,736,720                 -1                  0                  0               0.00
+---
+total cached size: 0
+[sdbadmin@dell-c79-1703-3083 ~]$ ./linux-fincore_x86 /opt/sequoiadb/database/standalone/11810/test_0.1.lobm
+filename                                                                                       size        total_pages    min_cached page       cached_pages        cached_size        cached_perc
+--------                                                                                       ----        -----------    ---------------       ------------        -----------        -----------
+/opt/sequoiadb/database/standalone/11810/test_0.1.lobm                                   86,048,768             21,008                 -1                  0                  0               0.00
+---
+total cached size: 0
+
+4、
+> db.snapshot(4)
+Takes 5.150273s.
+> db.snapshot(5)
+Takes 4.463868s.
+> db.snapshot(6)
+Takes 0.021538s.
+[sdbadmin@dell-c79-1703-3083 ~]$ ./linux-fincore_x86 /opt/sequoiadb/database/standalone/11810/test_0.1.data
+filename                                                                                       size        total_pages    min_cached page       cached_pages        cached_size        cached_perc
+--------                                                                                       ----        -----------    ---------------       ------------        -----------        -----------
+/opt/sequoiadb/database/standalone/11810/test_0.1.data                                  155,254,784             37,904                 -1                  0                  0               0.00
+---
+total cached size: 0
+[sdbadmin@dell-c79-1703-3083 ~]$ ./linux-fincore_x86 /opt/sequoiadb/database/standalone/11810/test_0.1.idx
+filename                                                                                       size        total_pages    min_cached page       cached_pages        cached_size        cached_perc
+--------                                                                                       ----        -----------    ---------------       ------------        -----------        -----------
+/opt/sequoiadb/database/standalone/11810/test_0.1.idx                                   151,060,480             36,880                 -1                  0                  0               0.00
+---
+total cached size: 0
+[sdbadmin@dell-c79-1703-3083 ~]$ ./linux-fincore_x86 /opt/sequoiadb/database/standalone/11810/test_0.1.lobd
+filename                                                                                       size        total_pages    min_cached page       cached_pages        cached_size        cached_perc
+--------                                                                                       ----        -----------    ---------------       ------------        -----------        -----------
+/opt/sequoiadb/database/standalone/11810/test_0.1.lobd                                7,113,605,120          1,736,720                 -1                  0                  0               0.00
+---
+total cached size: 0
+[sdbadmin@dell-c79-1703-3083 ~]$ ./linux-fincore_x86 /opt/sequoiadb/database/standalone/11810/test_0.1.lobm
+filename                                                                                       size        total_pages    min_cached page       cached_pages        cached_size        cached_perc
+--------                                                                                       ----        -----------    ---------------       ------------        -----------        -----------
+/opt/sequoiadb/database/standalone/11810/test_0.1.lobm                                   86,048,768             21,008                 -1                  0                  0               0.00
+---
+total cached size: 0
+
+listIndexes
+[sdbadmin@dell-c79-1703-3083 ~]$ ./linux-fincore_x86 /opt/sequoiadb/database/standalone/11810/test_0.1.data
+filename                                                                                       size        total_pages    min_cached page       cached_pages        cached_size        cached_perc
+--------                                                                                       ----        -----------    ---------------       ------------        -----------        -----------
+/opt/sequoiadb/database/standalone/11810/test_0.1.data                                  155,254,784             37,904              4,096                 32            131,072               0.08
+---
+total cached size: 131,072
+[sdbadmin@dell-c79-1703-3083 ~]$ ./linux-fincore_x86 /opt/sequoiadb/database/standalone/11810/test_0.1.idx
+filename                                                                                       size        total_pages    min_cached page       cached_pages        cached_size        cached_perc
+--------                                                                                       ----        -----------    ---------------       ------------        -----------        -----------
+/opt/sequoiadb/database/standalone/11810/test_0.1.idx                                   151,060,480             36,880              4,096                 96            393,216               0.26
+---
+total cached size: 393,216
+
+re listIndexes
+[sdbadmin@dell-c79-1703-3083 ~]$ ./linux-fincore_x86 /opt/sequoiadb/database/standalone/11810/test_0.1.data
+filename                                                                                       size        total_pages    min_cached page       cached_pages        cached_size        cached_perc
+--------                                                                                       ----        -----------    ---------------       ------------        -----------        -----------
+/opt/sequoiadb/database/standalone/11810/test_0.1.data                                  155,254,784             37,904                 -1                  0                  0               0.00
+---
+total cached size: 0
+[sdbadmin@dell-c79-1703-3083 ~]$ ./linux-fincore_x86 /opt/sequoiadb/database/standalone/11810/test_0.1.idx
+filename                                                                                       size        total_pages    min_cached page       cached_pages        cached_size        cached_perc
+--------                                                                                       ----        -----------    ---------------       ------------        -----------        -----------
+/opt/sequoiadb/database/standalone/11810/test_0.1.idx                                   151,060,480             36,880                 -1                  0                  0               0.00
+---
+total cached size: 0
